@@ -1,5 +1,8 @@
 package com.example.neetcode_150.LinkedList;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class LinkedList {
 	Node head;
 	
@@ -43,35 +46,67 @@ public class LinkedList {
     	System.out.println();
     }
 	
+	
+	
 	public static LinkedList reverse(LinkedList list) {
+		
 		if(list.head == null) {
 			return null;
 		}
+		
 		Node currentNode = list.head;
-		Node prev = null;
-		Node next = null;
+		Node prevNode = null;
+		Node nextNode = null;
 		
 		while(currentNode != null) {
-			next = currentNode.next;
-			currentNode.next = prev;
+			nextNode = currentNode.next;
+			currentNode.next = prevNode;
 			
-			prev = currentNode;
-			currentNode = next;
+			prevNode = currentNode;
+			currentNode = nextNode;
 			
 		}
-		list.head = prev;
+		
+		list.head = prevNode;
 		return list;
+		
+		
 	}
+	
+	public static boolean isCyclicLinkedList(LinkedList list) {
+		if(list.head == null) {
+			return false;
+		}
+		
+		Set<Node> set = new HashSet<>();
+		
+		Node currentNode = list.head;
+		
+		while(currentNode!=null) {
+			if(set.contains(currentNode)) {
+				return true;
+			}
+			set.add(currentNode);
+			currentNode = currentNode.next;
+		}
+		return false;
+	}
+	
+	
+	
 	
 	public static void main(String[] args) {
     	LinkedList list = new LinkedList();
     	
     	insert(list,1);
     	insert(list,2);
+    	insert(list,3);
+    	
     	display(list);
     	reverse(list);
     	System.out.println("reversed");
     	display(list);
+    	System.out.println(isCyclicLinkedList(list));
     	
     }
 	

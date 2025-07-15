@@ -92,21 +92,108 @@ public class LinkedList {
 		return false;
 	}
 	
+	public static void delete(LinkedList list, int data) {
+	    if (list.head == null) {
+	        System.out.println("List is empty");
+	        return;
+	    }
+
+	    // Handle head deletions first
+	    while (list.head != null && list.head.data == data) {
+	        list.head = list.head.next;
+	    }
+
+	    // Traverse the rest of the list
+	    Node current = list.head;
+	    while (current != null && current.next != null) {
+	        if (current.next.data == data) {
+	            // Skip/delele the matching node
+	            current.next = current.next.next;
+	        } else {
+	            // Only move forward if no deletion occurred
+	            current = current.next;
+	        }
+	    }
+	}
 	
+	public static void delete1(LinkedList list, int data) {
+		if(list.head == null) {
+			return;
+		}
+		
+		if(list.head != null && list.head.data == data) {
+			list.head = list.head.next;
+		}
+		
+		Node currentNode = list.head;
+		while(currentNode != null && currentNode.next!=null) {
+			if(currentNode.next.data == data) {
+				currentNode.next = currentNode.next.next;
+			}else {
+				currentNode = currentNode.next;
+			}
+		}
+		
+	}
+	
+	
+	public static LinkedList removeNthNode(LinkedList list, int n) {
+		
+		if(list.head == null) {
+			return null;
+		}
+		
+		int length = 0;
+		Node currentNode = list.head;
+		
+		while(currentNode != null) {
+			currentNode = currentNode.next;
+			length++;
+		}
+		System.out.println(length);
+		
+		if(length-n == 0) {
+			currentNode = currentNode.next;
+			return list;
+		}
+		
+		currentNode = list.head;
+		for(int i=1;i<length-n;i++) {
+			currentNode = currentNode.next;
+		}
+		
+		currentNode.next = currentNode.next.next;
+		
+		return list;
+		
+	}
 	
 	
 	public static void main(String[] args) {
     	LinkedList list = new LinkedList();
+    	LinkedList list2 = new LinkedList();
+
     	
     	insert(list,1);
-    	insert(list,2);
     	insert(list,3);
+    	insert(list,5);
+    	insert(list,7);
     	
+    	insert(list2,2);
+    	insert(list2,4);
+    	insert(list2,6);
+    	
+    	display(list);
+    	delete1(list,1);
     	display(list);
     	reverse(list);
     	System.out.println("reversed");
     	display(list);
+    	
     	System.out.println(isCyclicLinkedList(list));
+    	removeNthNode(list,2);
+    	display(list);
+    	
     	
     }
 	

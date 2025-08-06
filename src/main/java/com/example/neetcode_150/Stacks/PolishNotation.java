@@ -1,4 +1,4 @@
-package com.example.neetcode_150.SlidingWindow;
+package com.example.neetcode_150.Stacks;
 
 import java.util.Stack;
 

@@ -1,3 +1,4 @@
+package com.example.neetcode_150.Stacks;
 import java.util.Stack;
 
 public class LargestRectangleArea {

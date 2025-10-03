@@ -7,7 +7,7 @@ public class SpaceToUnderscore {
     
     public static void main(String[] args) {
         // Test with the example
-        String input = "Search in Rotated Sorted Array\n";
+        String input = "LRU Cache";
         String output = replaceSpacesWithUnderscores(input);
         
         System.out.println("Input: " + input);

@@ -1,5 +1,8 @@
 package com.example.neetcode_150.Tries;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 class TreeNode {
 	int val;
 	TreeNode left;
@@ -51,11 +54,39 @@ public class Invert_Binary_Tree {
 					queue.offer(current.left);
 					queue.offer(current.right);
 				} else {
-					System.out.print("null ");
+					System.out.print(" ");
 				}
 			}
 			System.out.println();
 		}
+	}
+	
+	
+	public TreeNode invertTreeLevelOrder(TreeNode root) {
+		if(root == null) {
+			return null;
+		}
+		
+		final Queue<TreeNode> queue = new LinkedList<>();
+		queue.add(root);
+		while(!queue.isEmpty()) {
+			
+			final TreeNode node = queue.poll();
+			
+			final TreeNode temp = node.left;
+			node.left = node.right;
+			node.right = temp;
+			
+			if(node.left != null) {
+				queue.add(node.left);
+			}
+			if(node.right!=null) {
+				queue.add(node.right);
+			}
+		}
+		
+		return root;
+		
 	}
 	
 	public static void main(String[] args) {
@@ -79,7 +110,7 @@ public class Invert_Binary_Tree {
 		System.out.println("Original tree:");
 		solution.printLevelOrder(root);
 		
-		TreeNode invertedRoot = solution.invertTree(root);
+		TreeNode invertedRoot = solution.invertTreeLevelOrder(root);
 		
 		System.out.println("\nInverted tree:");
 		solution.printLevelOrder(invertedRoot);
@@ -87,7 +118,7 @@ public class Invert_Binary_Tree {
 		// Test with empty tree
 		System.out.println("\nTesting with null tree:");
 		TreeNode nullRoot = null;
-		TreeNode invertedNull = solution.invertTree(nullRoot);
+		TreeNode invertedNull = solution.invertTreeLevelOrder(nullRoot);
 		solution.printLevelOrder(invertedNull);
 	}
 }

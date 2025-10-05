@@ -7,7 +7,7 @@ public class SpaceToUnderscore {
     
     public static void main(String[] args) {
         // Test with the example
-        String input = "Invert Binary Tree\n"
+        String input = "Lowest Common Ancestor in Binary Search Tree\n"
         		+ "";
         String output = replaceSpacesWithUnderscores(input);
         

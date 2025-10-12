@@ -136,6 +136,23 @@ public class LinkedList {
 		
 	}
 	
+	public static boolean hasCycle(Node head) {
+		
+		Node slow = head;
+		Node fast = head;
+		while(slow!=null && fast!=null && fast.next!=null) {
+			slow = slow.next;
+			fast = fast.next.next;
+			
+			if(slow == fast) {
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
+	
 	
 	public static LinkedList removeNthNode(LinkedList list, int n) {
 		
@@ -170,32 +187,52 @@ public class LinkedList {
 	
 	
 	public static void main(String[] args) {
-    	LinkedList list = new LinkedList();
-    	LinkedList list2 = new LinkedList();
+	    LinkedList list = new LinkedList();
+	    LinkedList list2 = new LinkedList();
 
-    	
-    	insert(list,1);
-    	insert(list,3);
-    	insert(list,5);
-    	insert(list,7);
-    	
-    	insert(list2,2);
-    	insert(list2,4);
-    	insert(list2,6);
-    	
-    	display(list);
-    	delete1(list,1);
-    	display(list);
-    	reverse(list);
-    	System.out.println("reversed");
-    	display(list);
-    	
-    	System.out.println(isCyclicLinkedList(list));
-    	removeNthNode(list,2);
-    	display(list);
-    	
-    	
-    }
+	    insert(list, 1);
+	    insert(list, 3);
+	    insert(list, 5);
+	    insert(list, 7);
+
+	    insert(list2, 2);
+	    insert(list2, 4);
+	    insert(list2, 6);
+
+	    display(list);
+	    delete1(list, 1);
+	    display(list);
+	    reverse(list);
+	    System.out.println("reversed");
+	    display(list);
+
+	    System.out.println("Is list cyclic? " + isCyclicLinkedList(list)); // false
+
+	    // --- Test hasCycle (Floyd's algorithm) ---
+	    
+	    // Create a cyclic list manually
+	    LinkedList cyclicList = new LinkedList();
+	    Node n1 = new Node(1);
+	    Node n2 = new Node(2);
+	    Node n3 = new Node(3);
+	    Node n4 = new Node(4);
+
+	    n1.next = n2;
+	    n2.next = n3;
+	    n3.next = n4;
+	    n4.next = n2; // Create cycle: 4 -> 2
+
+	    cyclicList.head = n1;
+
+	    System.out.println("Has cycle (Floyd)? " + hasCycle(cyclicList.head)); // true
+
+	    // Test with acyclic list
+	    System.out.println("Has cycle (Floyd) on list? " + hasCycle(list.head)); // false
+
+	    // Optional: test removeNthNode
+	    removeNthNode(list, 2);
+	    display(list);
+	}
 	
 	
 

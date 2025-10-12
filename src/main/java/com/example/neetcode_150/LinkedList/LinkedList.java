@@ -153,6 +153,29 @@ public class LinkedList {
 		
 	}
 	
+	public static Node hasCycleNode(Node head) {
+		
+		Node slow = head;
+		Node fast = head;
+		while(slow!=null && fast!=null && fast.next!=null) {
+			slow = slow.next;
+			fast = fast.next.next;
+			
+			if(slow == fast) {
+				while(head!=slow) {
+					head = head.next;
+					slow = slow.next;
+				}
+				return slow;
+			}
+		}
+		
+		return null;
+		
+	}
+	
+	
+	
 	
 	public static LinkedList removeNthNode(LinkedList list, int n) {
 		
@@ -184,6 +207,8 @@ public class LinkedList {
 		return list;
 		
 	}
+	
+	
 	
 	
 	public static void main(String[] args) {
@@ -225,7 +250,9 @@ public class LinkedList {
 	    cyclicList.head = n1;
 
 	    System.out.println("Has cycle (Floyd)? " + hasCycle(cyclicList.head)); // true
-
+	    
+	    Node cycleStart = hasCycleNode(cyclicList.head);
+	    System.out.println("Cycle starts at node with data: " + (cycleStart != null ? cycleStart.data : "no cycle"));
 	    // Test with acyclic list
 	    System.out.println("Has cycle (Floyd) on list? " + hasCycle(list.head)); // false
 

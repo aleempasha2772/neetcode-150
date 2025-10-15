@@ -25,6 +25,28 @@ public class TopKFrequentElements {
 		
 	}
 	
+	
+	public static int[] topk(int[] nums, int k) {
+		if(nums.length == 0) {
+			return null;
+		}
+		
+		Map<Integer,Integer> map = new HashMap<>();
+		
+		for(int n:nums) {
+			map.put(n, map.getOrDefault(n, 0)+1);
+		}
+		
+		int[] arr = map.entrySet()
+				.stream()
+				.sorted(Map.Entry.<Integer,Integer>comparingByValue().reversed())
+				.limit(k)
+				.mapToInt(Map.Entry::getKey)
+				.toArray();
+		
+		return arr;
+	}
+	
 	public static int[] topKFrequentElements(int[] nums, int k) {
 	    Map<Integer, Integer> map = new HashMap<>();
 	    
@@ -64,7 +86,7 @@ public class TopKFrequentElements {
 		int[] nums = {1,2,2,3,3,3};
 		int k = 2;
 		
-		int[] arr = topKFrequentElements(nums,k);
+		int[] arr = topk(nums,k);
 		for(int i=0;i<arr.length;i++) {
 			System.out.print(arr[i]+ " ");
 		}

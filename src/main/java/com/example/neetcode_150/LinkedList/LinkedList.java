@@ -1,6 +1,7 @@
 package com.example.neetcode_150.LinkedList;
 
 import java.util.HashSet;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 public class LinkedList {
@@ -208,6 +209,38 @@ public class LinkedList {
 		
 	}
 	
+	public static Node mergeKSoretedLinkedLists(Node[] lists) {
+	    PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.data, b.data));
+		
+	    //adding head of the linkedList
+		for(Node list:lists) {
+			if(list!=null) {
+				pq.add(list);
+			}
+		}
+		
+		Node result = null;
+		Node resultEnd = null;
+		
+		while(!pq.isEmpty()) {
+			Node smallest = pq.poll();
+			if(result == null) {
+				result = smallest;
+			}else {
+				resultEnd.next = smallest;
+			}
+			resultEnd = smallest;
+			
+			if(smallest.next!=null) {
+				pq.add(smallest.next);
+			}
+		}
+		
+		return result;
+		
+		
+    }
+	
 	
 	
 	
@@ -259,6 +292,52 @@ public class LinkedList {
 	    // Optional: test removeNthNode
 	    removeNthNode(list, 2);
 	    display(list);
+
+	    // ===================================================================
+	    // === TEST FOR mergeKSoretedLinkedLists (MERGE K SORTED LINKED LISTS) ===
+	    // ===================================================================
+
+	    // Create 3 sorted linked lists
+	    LinkedList l1 = new LinkedList();
+	    insert(l1, 1);
+	    insert(l1, 4);
+	    insert(l1, 5);
+
+	    LinkedList l2 = new LinkedList();
+	    insert(l2, 1);
+	    insert(l2, 3);
+	    insert(l2, 4);
+
+	    LinkedList l3 = new LinkedList();
+	    insert(l3, 2);
+	    insert(l3, 6);
+
+	    // Build array of heads (Node[])
+	    Node[] lists = new Node[] {
+	        l1.head,
+	        l2.head,
+	        l3.head
+	    };
+
+	    // Merge k sorted linked lists
+	    Node mergedHead = mergeKSoretedLinkedLists(lists);
+
+	    // Display the merged list
+	    System.out.println("\nMerged K Sorted Linked Lists:");
+	    Node current = mergedHead;
+	    if (current == null) {
+	        System.out.println("Empty result");
+	    } else {
+	        while (current != null) {
+	            System.out.print(current.data + " -> ");
+	            current = current.next;
+	        }
+	        System.out.println("null");
+	    }
+
+	    // ===================================================================
+	    // === END OF MERGE K LISTS TEST =====================================
+	    // ===================================================================
 	}
 	
 	

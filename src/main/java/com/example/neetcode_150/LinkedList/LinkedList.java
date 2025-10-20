@@ -216,6 +216,7 @@ public class LinkedList {
 		for(Node list:lists) {
 			if(list!=null) {
 				pq.add(list);
+				System.out.print(list.data+ " ");
 			}
 		}
 		
@@ -223,13 +224,19 @@ public class LinkedList {
 		Node resultEnd = null;
 		
 		while(!pq.isEmpty()) {
+			System.out.println();
+
 			Node smallest = pq.poll();
+			System.out.println();
+
+			System.out.print("trace after");
+			System.out.println(smallest.data);
 			if(result == null) {
 				result = smallest;
 			}else {
 				resultEnd.next = smallest;
 			}
-			resultEnd = smallest;
+ 			resultEnd = smallest;
 			
 			if(smallest.next!=null) {
 				pq.add(smallest.next);
@@ -241,6 +248,37 @@ public class LinkedList {
 		
     }
 	
+	
+	public static boolean palindrome(Node head) {
+		Node slow = head;
+		Node fast = head;
+		
+		while(fast!=null && fast.next!=null) {
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+		
+		Node prev = null;
+		Node next = null;
+		while(slow!=null) {
+			next = slow.next;
+			slow.next = prev;
+			prev = slow;
+			slow = next;
+		}
+		
+		Node left = head;
+		Node right = prev;
+		while(right!=null) {
+			if(left.data !=  right.data) {
+				return false;
+			}
+			left = left.next;
+			right = right.next;
+		}
+		return true;
+		
+	}
 	
 	
 	
@@ -256,6 +294,12 @@ public class LinkedList {
 	    insert(list2, 2);
 	    insert(list2, 4);
 	    insert(list2, 6);
+	    insert(list2, 4);
+	    insert(list2, 2);
+	    System.out.println("Palindrome");
+	    System.out.print(palindrome(list2.head));
+	    System.out.println();
+	    
 
 	    display(list);
 	    delete1(list, 1);
@@ -304,13 +348,13 @@ public class LinkedList {
 	    insert(l1, 5);
 
 	    LinkedList l2 = new LinkedList();
-	    insert(l2, 1);
-	    insert(l2, 3);
-	    insert(l2, 4);
-
+	    
+	    insert(l2, 2);
+	    insert(l2, 6);
 	    LinkedList l3 = new LinkedList();
-	    insert(l3, 2);
-	    insert(l3, 6);
+	    insert(l3, 1);
+	    insert(l3, 3);
+	    insert(l3, 4);
 
 	    // Build array of heads (Node[])
 	    Node[] lists = new Node[] {

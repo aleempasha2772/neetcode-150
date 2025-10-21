@@ -281,6 +281,47 @@ public class LinkedList {
 	}
 	
 	
+	public int getLength(Node head) {
+		int length = 0;
+		while(head!=null) {
+			length++;
+			head = head.next;
+		}
+		return length;
+	}
+	
+	public Node linkedListIntersection(Node headA,Node headB) {
+		if(headA == null || headB == null) {
+			return null;
+		}
+		
+		Node a = headA;
+		Node b = headB;
+		
+		int lenA = getLength(headA);
+		int lenB = getLength(headB);
+		
+		if(lenA > lenB) {
+			for(int i=0;i<lenA-lenB;i++) {
+				a = a.next;
+			}
+		}else {
+			for(int i=0;i<lenB-lenA;i++) {
+				b = b.next;
+			}
+		}
+		
+		while(a!=null && b!=null) {
+			if(a==b) {
+				return a;
+			}
+			a = a.next;
+			b = b.next;
+		}
+		
+		return null;
+	}
+	
 	
 	public static void main(String[] args) {
 	    LinkedList list = new LinkedList();
@@ -382,6 +423,61 @@ public class LinkedList {
 	    // ===================================================================
 	    // === END OF MERGE K LISTS TEST =====================================
 	    // ===================================================================
+	    
+	    
+	    
+	    
+	 // ===================================================================
+	 // === TEST FOR linkedListIntersection ================================
+	 // ===================================================================
+
+	 // Create common tail (shared part)
+	 Node common1 = new Node(8);
+	 Node common2 = new Node(9);
+	 common1.next = common2;
+
+	 // List A: 1 -> 3 -> 5 -> [8 -> 9]
+	 LinkedList listA = new LinkedList();
+	 listA.head = new Node(1);
+	 listA.head.next = new Node(3);
+	 listA.head.next.next = new Node(5);
+	 listA.head.next.next.next = common1; // intersects here
+
+	 // List B: 2 -> 4 -> [8 -> 9]
+	 LinkedList listB = new LinkedList();
+	 listB.head = new Node(2);
+	 listB.head.next = new Node(4);
+	 listB.head.next.next = common1; // same node as listA's tail → intersection
+
+	 // Create an instance to call the instance method
+	 LinkedList tester = new LinkedList();
+	 Node intersection = tester.linkedListIntersection(listA.head, listB.head);
+
+	 System.out.println("\nLinked List Intersection Test:");
+	 if (intersection != null) {
+	     System.out.println("Intersection at node with data: " + intersection.data);
+	 } else {
+	     System.out.println("No intersection found.");
+	 }
+
+	 // Also test with non-intersecting lists
+	 LinkedList listC = new LinkedList();
+	 insert(listC, 1);
+	 insert(listC, 2);
+	 insert(listC, 3);
+
+	 LinkedList listD = new LinkedList();
+	 insert(listD, 4);
+	 insert(listD, 5);
+	 insert(listD, 6);
+
+	 Node noIntersection = tester.linkedListIntersection(listC.head, listD.head);
+	 System.out.println("Non-intersecting lists test: " + 
+	                    (noIntersection == null ? "No intersection (correct)" : "Unexpected intersection"));
+
+	 // ===================================================================
+	 // === END OF INTERSECTION TEST =======================================
+	 // ===================================================================
 	}
 	
 	

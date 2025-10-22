@@ -1,6 +1,8 @@
 package com.example.neetcode_150.LinkedList;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
 
@@ -322,6 +324,34 @@ public class LinkedList {
 		return null;
 	}
 	
+	public static  void reorderList(Node head) {
+        if (head == null) {
+            return;
+        }
+
+        List<Node> nodes = new ArrayList<>();
+        Node cur = head;
+        while (cur != null) {
+            nodes.add(cur);
+            cur = cur.next;
+        }
+
+        int i = 0, j = nodes.size() - 1;
+        while (i < j) {
+            nodes.get(i).next = nodes.get(j);
+            i++;
+            if (i >= j) {
+                break;
+            }
+            nodes.get(j).next = nodes.get(i);
+            j--;
+        }
+
+        nodes.get(i).next = null;
+
+
+    }
+	
 	
 	public static void main(String[] args) {
 	    LinkedList list = new LinkedList();
@@ -478,6 +508,59 @@ public class LinkedList {
 	 // ===================================================================
 	 // === END OF INTERSECTION TEST =======================================
 	 // ===================================================================
+	 
+	 
+	 
+	// ===================================================================
+	// === TEST FOR reorderList ==========================================
+	// ===================================================================
+
+	LinkedList reorderListTest = new LinkedList();
+	insert(reorderListTest, 1);
+	insert(reorderListTest, 2);
+	insert(reorderListTest, 3);
+	insert(reorderListTest, 4);
+	insert(reorderListTest, 5);
+
+	System.out.println("\nOriginal list for reorder:");
+	display(reorderListTest);
+
+	// Call reorderList (static method, so use class name or directly)
+	reorderList(reorderListTest.head);
+
+	System.out.println("Reordered list (should be: 1 -> 5 -> 2 -> 4 -> 3):");
+	display(reorderListTest);
+
+	// Test with even number of nodes
+	LinkedList reorderEven = new LinkedList();
+	insert(reorderEven, 1);
+	insert(reorderEven, 2);
+	insert(reorderEven, 3);
+	insert(reorderEven, 4);
+
+	System.out.println("\nOriginal even-length list:");
+	display(reorderEven);
+
+	reorderList(reorderEven.head);
+
+	System.out.println("Reordered even list (should be: 1 -> 4 -> 2 -> 3):");
+	display(reorderEven);
+
+	// Edge case: single node
+	LinkedList singleNode = new LinkedList();
+	insert(singleNode, 10);
+	reorderList(singleNode.head);
+	System.out.println("\nSingle node after reorder:");
+	display(singleNode);
+
+	// Edge case: empty list (handled gracefully)
+	System.out.println("\nEmpty list reorder test:");
+	reorderList(null); // Should not crash
+	System.out.println("No crash on null input – safe.");
+
+	// ===================================================================
+	// === END OF reorderList TEST =======================================
+	// ===================================================================
 	}
 	
 	

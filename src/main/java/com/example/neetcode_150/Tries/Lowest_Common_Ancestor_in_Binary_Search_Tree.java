@@ -1,6 +1,8 @@
 package com.example.neetcode_150.Tries;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 
@@ -65,6 +67,38 @@ public class Lowest_Common_Ancestor_in_Binary_Search_Tree {
                 insertIntoBST(root.right, val);
             }
         }
+    }
+    
+    
+    
+    private static List<List<Integer>> levelOrderTraversal(TreeNode root){
+    	List<List<Integer>> list = new ArrayList<>();
+    	Queue<TreeNode> q = new LinkedList<>();
+    	
+    	if(root == null) {
+    		return null;
+    	}
+    	
+    	q.add(root);
+    	
+    	while(!q.isEmpty()) {
+    		List<Integer> list1 = new ArrayList<>();
+    		int levelSize = q.size();
+    		for(int i=0;i<levelSize;i++) {
+    			TreeNode temp = q.poll();
+    			list1.add(temp.val);
+    			if(temp.left!=null) {
+    				q.add(temp.left);
+    			}
+    			
+    			if(temp.right != null) {
+    				q.add(temp.right);
+    			}
+    		}
+    		list.add(list1);
+    	}
+    	
+    	return list;
     }
     
     public static void main(String[] args) {
@@ -145,5 +179,10 @@ public class Lowest_Common_Ancestor_in_Binary_Search_Tree {
         solution.printLevelOrder(root6);
         int depth6 = solution.maxDepth(root6);
         System.out.println("Max Depth: " + depth6); // Expected: 2
+        
+        
+        
+        System.out.println("///////////////////////////////////////////////////////////");
+        System.out.println(levelOrderTraversal(root1));
     }
 }
